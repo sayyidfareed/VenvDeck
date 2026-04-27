@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:python venv viewer}",
+            "name": "Debug VenvDeck",
+            "target": "VenvDeck",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug VenvDeck"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:python venv viewer}",
+            "name": "Release VenvDeck",
+            "target": "VenvDeck",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release VenvDeck"
+        }
+    ]
+}

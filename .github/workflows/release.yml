@@ -1,0 +1,40 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test
+        run: swift test
+
+      - name: Build DMG
+        run: bash scripts/package_dmg.sh
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VenvDeck-dmg
+          path: dist/VenvDeck.dmg
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/VenvDeck.dmg
+          body: |
+            Unsigned macOS DMG for VenvDeck.
+
+            macOS Gatekeeper will warn because this build is not Developer ID signed or notarized.
+            Open it with Control-click > Open, or approve it in System Settings > Privacy & Security.
